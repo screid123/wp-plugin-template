@@ -1,0 +1,42 @@
+{
+  "private": true,
+  "name": "wp-plugin-template",
+  "title": "WP Plugin Template",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "keywords": [
+    "wordpress",
+    "plugin"
+  ],
+  "scripts": {
+    "build": "NODE_ENV=production wp-scripts build assets/src/js/admin.js --output-path=assets/dist",
+    "dev": "NODE_ENV=production wp-scripts start assets/src/js/admin.js --output-path=assets/dist",
+    "format:js": "wp-scripts format-js assets/src",
+    "lint:css": "wp-scripts lint-style assets/src",
+    "lint:js": "wp-scripts lint-js assets/src",
+    "packages-update": "wp-scripts packages-update",
+    "release": "gulp release",
+    "start": "wp-env start",
+    "stop": "wp-env stop",
+    "test": "gulp test",
+    "wp-env": "wp-env"
+  },
+  "devDependencies": {
+    "@wordpress/env": "^4.1.0",
+    "@wordpress/scripts": "^18.0.0",
+    "del": "^6.0.0",
+    "dotenv": "^10.0.0",
+    "fancy-log": "^1.3.3",
+    "gulp": "^4.0.2",
+    "gulp-hb": "^8.0.0",
+    "gulp-json-editor": "^2.5.6",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.3",
+    "gulp-zip": "^5.1.0",
+    "handlebars": "^4.7.7",
+    "helper-markdown": "^1.0.0",
+    "merge-stream": "^2.0.0",
+    "yaml-js": "^0.2.3"
+  },
+  "dependencies": {}
+}
