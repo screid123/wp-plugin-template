@@ -1,0 +1,7 @@
+{
+  "core": null,
+  "config": {
+    "PANTHEON_ENVIRONMENT": "dev",
+    "WP_ENVIRONMENT_TYPE": "development"
+  }
+}
