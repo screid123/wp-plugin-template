@@ -1,0 +1,20 @@
+---
+name: "WP Plugin Template"
+slug: "wp-plugin-template"
+uri: "https://github.com/screid123/wp-plugin-template"
+author: "Reid Linker"
+author_uri: "https://github.com/screid123"
+requires: "5.5.1"
+tested: "5.5.1"
+requires_php: "7.3"
+license: "GPLv3 or later"
+license_uri: "https://www.gnu.org/licenses/gpl-3.0.txt"
+contributors:
+  - screid123
+short_description: "Add required metadata fields for proper image and media credits."
+description: |-
+  Add required metadata fields for proper image and media credit.
+installation: false
+faqs: false
+screenshots: false
+banners: false
