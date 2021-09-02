@@ -1,0 +1,97 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+' # release tags
+      - 'v[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+' # pre-release tags
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repo.'
+        uses: actions/checkout@v2
+      - name: 'Setup Node.'
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: 'Get the version from tag name.' # https://github.community/t5/GitHub-Actions/How-to-get-just-the-tag-name/m-p/32167#M1027
+        id: get_version
+        run: echo ::set-output name=tag_name::${GITHUB_REF/refs\/tags\//}
+      - name: 'Get Composer cache directory.'
+        id: composer-cache
+        run: echo ::set-output name=dir::$(composer config cache-files-dir)
+      - name: 'Cache the NPM + composer installs.'
+        uses: actions/cache@v2
+        env:
+          cache-name: vendor-cache-v1 # Increment this to force a new cache.
+        with:
+          path: |
+            ~/.npm
+            ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-release-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json', '**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-release-${{ env.cache-name }}-
+            ${{ runner.os }}-release-
+            ${{ runner.os }}-
+      - name: 'Install Composer dependencies.'
+        run: composer install --no-dev
+      - name: 'Install NPM dependencies.'
+        run: npm ci
+      - name: 'Build plugin assets.'
+        run: npm run release
+      - name: 'Run tests.'
+        env:
+          TAG_NAME: ${{ steps.get_version.outputs.tag_name }}
+        run: npm test
+      - name: 'Upload build artifacts.'
+        uses: actions/upload-artifact@v2
+        with:
+          name: build_artifact
+          path: dist/
+      - name: 'Create a GitHub Release.'
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token.
+        with:
+          tag_name: ${{ github.ref }} # 'refs/tag/' is removed: https://github.com/actions/create-release/blob/master/src/create-release.js#L16
+          release_name: ${{ github.ref }} # 'refs/tag/' is removed: https://github.com/actions/create-release/blob/master/src/create-release.js#L17
+          body_path: dist/release_notes.txt
+          draft: false
+          prerelease: ${{ contains(steps.get_version.outputs.tag_name, '-rc.') }}
+      - name: 'Download build artifacts.'
+        uses: actions/download-artifact@v2
+        with:
+          name: build_artifact
+      - name: 'Upload the plugin as a Release Asset.'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token.
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the 'create_release' step to get its outputs object, which include a `upload_url`.
+          asset_path: dist/rv-media-credit-${{ steps.get_version.outputs.tag_name }}.zip
+          asset_name: rv-media-credit-${{ steps.get_version.outputs.tag_name }}.zip
+          asset_content_type: application/zip
+      - name: 'Remove “release_notes.txt” before uploading to S3.'
+        run: rm -f release_notes.txt
+        working-directory: dist
+      - name: 'Remove “manifest.json” for pre-releases before uploading to S3.'
+        if: contains(steps.get_version.outputs.tag_name, '-rc.')
+        run: rm -f manifest.json
+        working-directory: dist
+      - name: 'Deploy artifacts to S3.'
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl private
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: "dist"
+          DEST_DIR: "wordpress-plugins/rv-media-credit"
+      - name: 'Purge ”manifest.json” cache.'
+        if: success()
+        run: curl -X PURGE https://cdn.ccstatic.com/wordpress-plugins/rv-media-credit/manifest.json
