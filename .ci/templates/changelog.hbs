@@ -1,0 +1,73 @@
+# {{ changelog.title }}
+
+{{& changelog.summary}}
+
+## [Unreleased]({{plugin.uri}}/compare/{{#with (lookup changelog.releases 0)~}}{{tag_name}}{{/with}}...HEAD)
+{{#if changelog.unreleased}}
+{{#each changelog.unreleased}}
+- {{& description}}{{#if link}} ([🔗]({{link}})){{/if}}
+{{/each}}
+{{/if}}
+
+{{#each changelog.releases}}
+{{#if link}}
+## [{{name}}]({{../../plugin.uri}}{{link}}) - {{date}}
+{{else}}
+## {{name}} - {{date}}
+{{/if}}
+
+{{~#if notice}}
+
+> 📢 NOTICE: {{& notice}}
+{{/if}}
+
+{{#if breaking~}}
+### ‼️ Breaking Changes
+{{#each breaking}}
+- {{& this}}
+{{/each}}
+
+{{/if}}
+{{#if added~}}
+### 📦 Added
+{{#each added}}
+- {{& this}}
+{{/each}}
+
+{{/if}}
+{{#if changed~}}
+### 👌 Changed
+{{#each changed}}
+- {{& this}}
+{{/each}}
+
+{{/if}}
+{{#if deprecated~}}
+### ⚠️ Deprecated
+{{#each deprecated}}
+- {{& this}}
+{{/each}}
+
+{{/if}}
+{{#if removed~}}
+### 🚫 Removed
+{{#each removed}}
+- {{& this}}
+{{/each}}
+
+{{/if}}
+{{#if fixed~}}
+### 🐛 Fixed
+{{#each fixed}}
+- {{& this}}
+{{/each}}
+
+{{/if}}
+{{#if security~}}
+### 🚨 Security
+{{#each security}}
+- {{& this}}
+{{/each}}
+
+{{/if}}
+{{/each}}
