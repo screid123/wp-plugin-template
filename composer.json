@@ -1,0 +1,61 @@
+{
+  "name": "wp-plugin-template",
+  "description": "Add required metadata fields for proper image and media credit.",
+  "homepage": "https://github.com/CreditCardsCom/wp-media-credit",
+  "license": "GPLv3-or-later",
+  "type": "wordpress-plugin",
+  "authors": [
+    {
+      "name": "Reid Linker",
+      "homepage": "https://github.com/screid123/wp-plugin-template/contributors"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/screid123/wp-plugin-template/issues",
+    "wiki": "https://github.com/screid123/wp-plugin-template/wiki"
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "optimize-autoloader": true
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "only": [
+        "wpackagist-plugin/*"
+      ]
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Screid123\\": "includes/"
+    },
+    "classmap": [
+      "includes/"
+    ],
+    "files": [
+      "lib/RV_Updater.php"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/advanced-custom-fields": [ "wpackagist-plugin/advanced-custom-fields" ]
+    }
+  },
+  "require": {
+    "php": ">=7.3",
+    "composer/installers": "~2.0",
+    "wpackagist-plugin/advanced-custom-fields": "~5.10",
+    "ext-dom": "*",
+    "ext-libxml": "*"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+    "phpcompatibility/php-compatibility": "*",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "^2.3"
+  }
+}
