@@ -66,7 +66,7 @@ function changelog() {
  * Create the manifest.json
  */
 function manifest() {
-	const jeditor = require('gulp-json-editor');
+	const json_editor = require('gulp-json-editor');
 	const { version } = getPackageJSON();
 	const changelog = getChangelogInfo();
 	const plugin = getPluginInfo();
@@ -102,7 +102,7 @@ function manifest() {
 
 	return gulp.src('./.ci/templates/manifest.hbs')
 		.pipe(hb)
-		.pipe(jeditor(json => json))
+		.pipe(json_editor(json => json))
 		.pipe(rename('manifest.json'))
 		.pipe(gulp.dest('./dist', { overwrite: true }));
 }
@@ -135,7 +135,7 @@ function releaseNotes() {
 	const changelog = getChangelogInfo();
 
 	// Get a the associated release changes from the changelog data.
-	const release = changelog.releases.find(item => item.tag_name === `v${version}`);
+	const release = changelog.releases.find(({ tag_name = '' }) => tag_name === `v${version}`);
 	if (!release) {
 		throw Error(`ERROR: "v${version}" is not a valid release in the changelog!`);
 	}
@@ -155,15 +155,50 @@ function releaseNotes() {
  */
 function build() {
 	const { version } = getPackageJSON();
+	const {
+		author,
+		author_uri,
+		description,
+		download_uri,
+		name,
+		requires,
+		requires_php,
+		short_description,
+		slug,
+		text_domain,
+		uri,
+	} = getPluginInfo();
 
 	log('Compiling plugin PHP files...');
 
 	return merge(
-		gulp.src('./media-credit.php')
-			.pipe(replace(/__VERSION__/g, version))
+		gulp.src('./*.php')
+			.pipe(replace(/\{\{VERSION\}\}/g, version))
+			.pipe(replace(/\{\{NAME\}\}/g, name))
+			.pipe(replace(/\{\{SLUG\}\}/g, slug))
+			.pipe(replace(/\{\{TEXT_DOMAIN\}\}/g, text_domain))
+			.pipe(replace(/\{\{DESCRIPTION\}\}/g, description))
+			.pipe(replace(/\{\{SHORT_DESCRIPTION\}\}/g, short_description))
+			.pipe(replace(/\{\{REQUIRES\}\}/g, requires))
+			.pipe(replace(/\{\{REQUIRES_PHP\}\}/g, requires_php))
+			.pipe(replace(/\{\{URI\}\}/g, uri))
+			.pipe(replace(/\{\{AUTHOR\}\}/g, author))
+			.pipe(replace(/\{\{AUTHOR_URI\}\}/g, author_uri))
+			.pipe(replace(/\{\{DOWNLOAD_URI\}\}/g, download_uri))
 			.pipe(gulp.dest('./build', { overwrite: true })),
 		gulp.src('./includes/**/*')
-			.pipe(replace(/__VERSION__/g, version))
+			.pipe(replace(/\{\{VERSION\}\}/g, version))
+			.pipe(replace(/\{\{NAME\}\}/g, name))
+			.pipe(replace(/\{\{SLUG\}\}/g, slug))
+			.pipe(replace(/\{\{TEXT_DOMAIN\}\}/g, text_domain))
+			.pipe(replace(/\{\{DESCRIPTION\}\}/g, description))
+			.pipe(replace(/\{\{SHORT_DESCRIPTION\}\}/g, short_description))
+			.pipe(replace(/\{\{REQUIRES\}\}/g, requires))
+			.pipe(replace(/\{\{REQUIRES_PHP\}\}/g, requires_php))
+			.pipe(replace(/\{\{URI\}\}/g, uri))
+			.pipe(replace(/\{\{AUTHOR\}\}/g, author))
+			.pipe(replace(/\{\{AUTHOR_URI\}\}/g, author_uri))
+			.pipe(replace(/\{\{DOWNLOAD_URI\}\}/g, download_uri))
 			.pipe(gulp.dest('./build/includes', { overwrite: true }))
 	);
 }
@@ -179,8 +214,6 @@ function copy() {
 			.pipe(gulp.dest('./build/vendor', { overwrite: true })),
 		gulp.src('./lib/**/*')
 			.pipe(gulp.dest('./build/lib', { overwrite: true })),
-		gulp.src(['./assets/**/*', '!./assets/src', '!./assets/src/*', '!./assets/src/**/*'])
-			.pipe(gulp.dest('./build/assets', { overwrite: true })),
 	);
 }
 
@@ -189,14 +222,15 @@ function copy() {
  */
 function zip() {
 	const { version } = getPackageJSON();
+	const { slug } = getPluginInfo();
 
 	log('Creating ZIP file for distribution...');
 
 	return gulp.src('./build/**/*')
 		.pipe(rename((file) => {
-			file.dirname = path.join('rv-media-credit', file.dirname);
+			file.dirname = path.join(slug, file.dirname);
 		}))
-		.pipe(require('gulp-zip')(`rv-media-credit-v${version}.zip`, { modifiedTime: new Date() }))
+		.pipe(require('gulp-zip')(`${slug}-v${version}.zip`, { modifiedTime: new Date() }))
 		.pipe(gulp.dest('./dist', { overwrite: true }));
 }
 
@@ -224,6 +258,19 @@ function test(cb) {
 	return cb();
 }
 
+/**
+ * Watch files and build on change.
+ */
+function watch() {
+	gulp.watch('./includes/**/*', build);
+	gulp.watch(['./lib/**/*', './vendor/**/*'], copy);
+}
+
+exports.build = gulp.series(
+	clean,
+	gulp.parallel(build, copy),
+	gulp.parallel(changelog, releaseNotes, manifest, readme),
+);
 exports.clean = clean;
 exports.release = gulp.series(
 	clean,
@@ -232,4 +279,5 @@ exports.release = gulp.series(
 	zip
 );
 exports.test = test;
+exports.watch = watch;
 exports.zip = zip;
