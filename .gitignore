@@ -60,4 +60,3 @@ Thumbs.db
 !.gitignore
 !.gitkeep
 !.wp-env.json
-!assets/dist

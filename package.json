@@ -9,8 +9,12 @@
     "plugin"
   ],
   "scripts": {
-    "build": "NODE_ENV=production wp-scripts build assets/src/js/admin.js --output-path=assets/dist",
-    "dev": "NODE_ENV=production wp-scripts start assets/src/js/admin.js --output-path=assets/dist",
+    "build": "run-p build:*",
+    "build:assets": "NODE_ENV=production wp-scripts build assets/js/admin.js --output-path=build/assets",
+    "build:php": "gulp build",
+    "dev": "run-p dev:*",
+    "dev:assets": "NODE_ENV=production wp-scripts start assets/js/admin.js --output-path=build/assets",
+    "dev:php": "gulp watch",
     "format:js": "wp-scripts format-js assets/src",
     "lint:css": "wp-scripts lint-style assets/src",
     "lint:js": "wp-scripts lint-js assets/src",
@@ -36,7 +40,7 @@
     "handlebars": "^4.7.7",
     "helper-markdown": "^1.0.0",
     "merge-stream": "^2.0.0",
+    "npm-run-all": "^4.1.5",
     "yaml-js": "^0.2.3"
-  },
-  "dependencies": {}
+  }
 }
