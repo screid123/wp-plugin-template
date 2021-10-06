@@ -3,7 +3,7 @@
 	"author": "{{#if plugin.author_uri}}<a href=\"{{plugin.author_uri}}\">{{plugin.author}}</a>{{else}}{{plugin.author}}{{/if}}",
 	"version": "{{version}}",
 	"homepage": "{{changelog.repo}}",
-	"download_link" : "http://cdn.ccstatic.com/wordpress-plugins/{{plugin.slug}}/{{plugin.slug}}-v{{version}}.zip",
+	"download_link" : "{{plugin.download_uri}}{{plugin.slug}}-v{{version}}.zip",
 	"requires": "{{plugin.requires}}",
 	"tested": "{{plugin.tested}}",
 	"requires_php": "{{plugin.requires_php}}",
