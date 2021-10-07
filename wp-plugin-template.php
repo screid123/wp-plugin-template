@@ -35,6 +35,9 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 // Register activation hook.
 register_activation_hook( __FILE__, [ __NAMESPACE__ . '\Activator', 'activate' ] );
 
+// Register deactivation hook.
+register_deactivation_hook( __FILE__, [ __NAMESPACE__ . '\Deactivator', 'deactivate' ] );
+
 // Initialize the plugin.
 if ( ! wp_installing() ) {
 	add_action( 'plugins_loaded', static function() {
