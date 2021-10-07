@@ -1,19 +1,7 @@
 {
   "name": "screid123/wp-plugin-template",
-  "description": "Add required metadata fields for proper image and media credit.",
-  "homepage": "https://github.com/CreditCardsCom/wp-media-credit",
   "license": "GPLv3-or-later",
   "type": "wordpress-plugin",
-  "authors": [
-    {
-      "name": "Reid Linker",
-      "homepage": "https://github.com/screid123/wp-plugin-template/contributors"
-    }
-  ],
-  "support": {
-    "issues": "https://github.com/screid123/wp-plugin-template/issues",
-    "wiki": "https://github.com/screid123/wp-plugin-template/wiki"
-  },
   "minimum-stability": "stable",
   "prefer-stable": true,
   "config": {
