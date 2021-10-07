@@ -41,5 +41,6 @@ register_deactivation_hook( __FILE__, [ __NAMESPACE__ . '\Deactivator', 'deactiv
 // Initialize the plugin.
 if ( ! wp_installing() ) {
 	add_action( 'plugins_loaded', static function() {
+		( new Bootstrap() )->init();
 	} );
 }
