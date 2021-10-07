@@ -7,6 +7,8 @@ const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 const handlebars = require('gulp-hb');
 const merge = require('merge-stream');
+const lazypipe = require('lazypipe');
+const composer = require('gulp-composer');
 
 // Load .env file if present
 require('dotenv').config();
@@ -169,36 +171,30 @@ function build() {
 		uri,
 	} = getPluginInfo();
 
+	const replacePlaceholders = lazypipe()
+		.pipe(replace, /\{\{VERSION\}\}/g, version)
+		.pipe(replace, /\{\{NAME\}\}/g, name)
+		.pipe(replace, /\{\{SLUG\}\}/g, slug)
+		.pipe(replace, /\{\{TEXT_DOMAIN\}\}/g, text_domain)
+		.pipe(replace, /\{\{DESCRIPTION\}\}/g, description)
+		.pipe(replace, /\{\{SHORT_DESCRIPTION\}\}/g, short_description)
+		.pipe(replace, /\{\{REQUIRES\}\}/g, requires)
+		.pipe(replace, /\{\{REQUIRES_PHP\}\}/g, requires_php)
+		.pipe(replace, /\{\{URI\}\}/g, uri)
+		.pipe(replace, /\{\{AUTHOR\}\}/g, author)
+		.pipe(replace, /\{\{AUTHOR_URI\}\}/g, author_uri)
+		.pipe(replace, /\{\{DOWNLOAD_URI\}\}/g, download_uri);
+
 	log('Compiling plugin PHP files...');
 
 	return merge(
+		// Root files (plugin base files)
 		gulp.src('./*.php')
-			.pipe(replace(/\{\{VERSION\}\}/g, version))
-			.pipe(replace(/\{\{NAME\}\}/g, name))
-			.pipe(replace(/\{\{SLUG\}\}/g, slug))
-			.pipe(replace(/\{\{TEXT_DOMAIN\}\}/g, text_domain))
-			.pipe(replace(/\{\{DESCRIPTION\}\}/g, description))
-			.pipe(replace(/\{\{SHORT_DESCRIPTION\}\}/g, short_description))
-			.pipe(replace(/\{\{REQUIRES\}\}/g, requires))
-			.pipe(replace(/\{\{REQUIRES_PHP\}\}/g, requires_php))
-			.pipe(replace(/\{\{URI\}\}/g, uri))
-			.pipe(replace(/\{\{AUTHOR\}\}/g, author))
-			.pipe(replace(/\{\{AUTHOR_URI\}\}/g, author_uri))
-			.pipe(replace(/\{\{DOWNLOAD_URI\}\}/g, download_uri))
+			.pipe(replacePlaceholders())
 			.pipe(gulp.dest('./build', { overwrite: true })),
+		// Include files (classes)
 		gulp.src('./includes/**/*')
-			.pipe(replace(/\{\{VERSION\}\}/g, version))
-			.pipe(replace(/\{\{NAME\}\}/g, name))
-			.pipe(replace(/\{\{SLUG\}\}/g, slug))
-			.pipe(replace(/\{\{TEXT_DOMAIN\}\}/g, text_domain))
-			.pipe(replace(/\{\{DESCRIPTION\}\}/g, description))
-			.pipe(replace(/\{\{SHORT_DESCRIPTION\}\}/g, short_description))
-			.pipe(replace(/\{\{REQUIRES\}\}/g, requires))
-			.pipe(replace(/\{\{REQUIRES_PHP\}\}/g, requires_php))
-			.pipe(replace(/\{\{URI\}\}/g, uri))
-			.pipe(replace(/\{\{AUTHOR\}\}/g, author))
-			.pipe(replace(/\{\{AUTHOR_URI\}\}/g, author_uri))
-			.pipe(replace(/\{\{DOWNLOAD_URI\}\}/g, download_uri))
+			.pipe(replacePlaceholders())
 			.pipe(gulp.dest('./build/includes', { overwrite: true }))
 	);
 }
@@ -258,11 +254,16 @@ function test(cb) {
 	return cb();
 }
 
+function composerUpdate(cb) {
+	composer( 'update' );
+	return cb();
+}
+
 /**
  * Watch files and build on change.
  */
 function watch() {
-	gulp.watch('./includes/**/*', build);
+	gulp.watch('./includes/**/*', gulp.series(composerUpdate, build));
 	gulp.watch(['./lib/**/*', './vendor/**/*'], copy);
 }
 
