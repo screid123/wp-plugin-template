@@ -7,12 +7,23 @@ Template repo for WordPress plugin development that uses Composer to manage depe
 1. Replace all the following values with your own namespace (recommended format: `Vendor\Namespace`)
    - `namespace WP_Plugin_Template`
    - `@package WP_Plugin_Template`
+   - `use WP_Plugin_Template\...`
+   > NOTE: Basically find all instances of "WP_Plugin_Template" and replace with your custom "Vendor\Namespace" value.
 2. Update `composer.json` with your settings, paying special attention to the following keys:
-   - `name` - Adjust to match your namespace, but lower-cased.
-   - `autoload.psr-4` - Adjust to match your namespace.
-   - `extra.imposter.namespace` - Adjust to match your namespace, and keep the "\\Dependencies" tail.
+   - `name` - Adjust to match your namespace, but lower-cased
+   - `autoload.psr-4` - Adjust to match your namespace
+   - `extra.imposter.namespace` - Adjust to match your namespace (keep the "\\Dependencies" tail)
 3. Update `.ci/data/plugin-info.yml` with your own information.
-4. Follow the [Development](#development) and [Release](#release) instructions below!
+4. Update your project/repo's Secrets for use with GitHub Actions:
+   - `AWS_S3_BUCKET`
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+   - `AWS_REGION`
+5. Update the "Release" workflow (`./github/workflows/release.yml`) environment variables (lines 13-15):
+   - `PLUGIN_SLUG` - Should match `slug` in `plugin-info.yml`
+   - `DOWNLOAD_URI` - Should match `download_uri` in `plugin-info.yml`
+   - `DEST_DIR` - Should be the relative path of `DOWNLOAD_URI`, e.g. - `https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/` would be `wordpress-plugins/wp-plugin-template` (no leading or trailing slash!)
+7. Follow the [Development](#development) and [Release](#release) instructions below!
 
 ## Development
 
