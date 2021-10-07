@@ -1,0 +1,11 @@
+{
+  "core": null,
+  "config": {
+    "PANTHEON_ENVIRONMENT": "dev",
+    "WP_ENVIRONMENT_TYPE": "development"
+  },
+  "mappings": {
+    "wp-content/plugins/advanced-custom-fields-pro": "../creditcards.com/wp-content/plugins/advanced-custom-fields-pro",
+    "wp-content/plugins/wp-plugin-template": "./build/"
+  }
+}

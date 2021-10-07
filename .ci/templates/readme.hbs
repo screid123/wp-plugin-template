@@ -1,0 +1,93 @@
+{{#with plugin}}
+=== {{name}} ===
+Contributors: {{#each contributors~}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+Requires at least: {{requires}}
+Tested up to: {{tested}}
+Requires PHP: {{requires_php}}
+Stable tag: {{#with (lookup @root.changelog.releases 0)~}}{{tag_name}}{{/with}}
+License: {{license}}
+License URI: {{license_uri}}
+
+{{short_description}}
+{{#if description}}
+
+== Description ==
+
+{{& description}}
+{{/if}}
+{{#if installation}}
+
+== Installation ==
+
+{{& installation}}
+{{/if}}
+{{#if faqs}}
+
+== Frequently Asked Questions ==
+{{#each faqs}}
+
+= {{ q }} =
+
+{{ a }}
+{{/each}}
+{{/if}}
+{{#if screenshots}}
+
+== Screenshots ==
+
+{{#each screenshots~}}
+	{{count @index}}. {{& caption}}
+{{/each}}
+{{/if}}
+{{/with}}
+{{#with changelog}}
+
+== Changelog ==
+{{#with (lookup releases 0)}}
+
+= {{name}} ({{date}}) =
+{{#if breaking~}}
+{{#each breaking}}
+* ‼️ BREAKING: {{& this}}
+{{/each}}
+{{/if}}
+{{#if added~}}
+{{#each added}}
+* 📦 ADDED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if changed~}}
+{{#each changed}}
+* 👌 CHANGED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if deprecated~}}
+{{#each deprecated}}
+* ⚠️ DEPRECATED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if removed~}}
+{{#each removed}}
+* 🚫 REMOVED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if fixed~}}
+{{#each fixed}}
+* 🐛 FIXED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if security~}}
+{{#each security}}
+* 🚨 SECURITY: {{& this}}
+{{/each}}
+{{/if}}
+{{#if notice}}
+
+== Upgrade Notice ==
+
+= {{title}} ({{date}}) =
+{{& notice}}
+
+{{~/if}}
+{{~/with}}
+{{~/with}}

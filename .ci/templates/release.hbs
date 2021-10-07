@@ -1,0 +1,38 @@
+{{#if notice~}}
+> 📢 NOTICE: {{& notice}}
+{{/if}}
+{{#if breaking~}}
+{{#each breaking}}
+* ‼️ BREAKING: {{& this}}
+{{/each}}
+{{/if}}
+{{#if added~}}
+{{#each added}}
+* 📦 ADDED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if changed~}}
+{{#each changed}}
+* 👌 CHANGED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if deprecated~}}
+{{#each deprecated}}
+* ⚠️ DEPRECATED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if removed~}}
+{{#each removed}}
+* 🚫 REMOVED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if fixed~}}
+{{#each fixed}}
+* 🐛 FIXED: {{& this}}
+{{/each}}
+{{/if}}
+{{#if security~}}
+{{#each security}}
+* 🚨 SECURITY: {{& this}}
+{{/each}}
+{{/if}}

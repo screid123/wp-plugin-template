@@ -1,0 +1,44 @@
+{
+	"name": "{{plugin.name}}",
+	"author": "{{#if plugin.author_uri}}<a href=\"{{plugin.author_uri}}\">{{plugin.author}}</a>{{else}}{{plugin.author}}{{/if}}",
+	"version": "{{version}}",
+	"homepage": "{{changelog.repo}}",
+	"download_link" : "{{plugin.download_uri}}{{plugin.slug}}-v{{version}}.zip",
+	"requires": "{{plugin.requires}}",
+	"tested": "{{plugin.tested}}",
+	"requires_php": "{{plugin.requires_php}}",
+	"last_updated": "{{#with (first releases)}}{{iso_date date}}{{/with}}",
+{{#if plugin.banners}}
+	"banners": {
+		"low": "{{plugin.banners.low}}",
+		"high": "{{plugin.banners.high}}"
+	},
+{{/if}}
+{{#if plugin.screenshots}}
+	"screenshots": [
+	{{#each plugin.screenshots}}
+		{
+			"url": "{{url}}",
+			"caption": "{{& caption}}"
+		}
+		{{#unless @last}},{{/unless}}
+	{{/each}}
+	],
+{{/if}}
+	"description": "{{#if plugin.description}}{{plugin.description}}{{else}}{{plugin.short_description}}{{/if}}",
+{{#if plugin.installation~}}
+	"installation": "{{plugin.installation}}",
+{{~/if}}
+{{#if releases.[0].notice~}}
+	"upgrade_notice": "{{& format (markdown releases.[0].notice)}}"
+{{~/if}}
+	"changelog": "{{#each releases~}}<h4>{{tag_name}} ({{nice_date date}})</h4><ul>
+		{{~#if breaking~}}{{~#each breaking~}}<li>‼️ Breaking Change: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
+		{{~#if added~}}{{~#each added~}}<li>📦 Added: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
+		{{~#if changed~}}{{~#each changed~}}<li>👌 Changed: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
+		{{~#if deprecated~}}{{~#each deprecated~}}<li>⚠️ Deprecated: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
+		{{~#if removed~}}{{~#each removed~}}<li>🚫 Removed: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
+		{{~#if fixed~}}{{~#each fixed~}}<li>🐛 Fixed: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
+		{{~#if security~}}{{~#each security~}}<li>🚨 Security: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
+	</ul>{{~/each}}<p><a href='{{ changelog.repo }}/blob/master/CHANGELOG.md'>View the full changelog</a></p>"
+}

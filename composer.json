@@ -1,0 +1,45 @@
+{
+  "name": "screid123/wp-plugin-template",
+  "license": "GPLv3-or-later",
+  "type": "wordpress-plugin",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "classmap": [
+      "includes/"
+    ],
+    "psr-4": {
+      "WP_Plugin_Template\\": "includes/"
+    },
+    "files": [
+      "lib/RV_Updater.php"
+    ]
+  },
+  "extra": {
+    "imposter": {
+      "namespace": "WP_Plugin_Template\\Dependencies",
+      "excludes": []
+    }
+  },
+  "require": {
+    "php": ">=7.3",
+    "ext-dom": "*",
+    "ext-libxml": "*",
+    "cedaro/wp-plugin": "^0.4.0",
+    "composer/installers": "^2.0",
+    "micropackage/requirements": "^1.1"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+    "phpcompatibility/php-compatibility": "*",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "^2.3",
+    "typisttech/imposter-plugin": "dev-master"
+  }
+}
