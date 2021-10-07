@@ -1,13 +1,6 @@
 {
   "private": true,
-  "name": "wp-plugin-template",
-  "title": "WP Plugin Template",
   "version": "1.0.0",
-  "license": "GPL-3.0-or-later",
-  "keywords": [
-    "wordpress",
-    "plugin"
-  ],
   "scripts": {
     "build": "npm run build:php && npm run build:assets",
     "build:assets": "NODE_ENV=production wp-scripts build assets/js/admin.js assets/js/frontend.js --output-path=build/assets",
