@@ -1,5 +1,5 @@
 {
-  "name": "wp-plugin-template",
+  "name": "screid123/wp-plugin-template",
   "description": "Add required metadata fields for proper image and media credit.",
   "homepage": "https://github.com/CreditCardsCom/wp-media-credit",
   "license": "GPLv3-or-later",
@@ -15,40 +15,35 @@
     "wiki": "https://github.com/screid123/wp-plugin-template/wiki"
   },
   "minimum-stability": "stable",
+  "prefer-stable": true,
   "config": {
-    "optimize-autoloader": true
+    "optimize-autoloader": true,
+    "sort-packages": true
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://wpackagist.org",
-      "only": [
-        "wpackagist-plugin/*"
-      ]
-    }
-  ],
   "autoload": {
-    "psr-4": {
-      "Screid123\\": "includes/"
-    },
     "classmap": [
       "includes/"
     ],
+    "psr-4": {
+      "WP_Plugin_Template\\": "includes/"
+    },
     "files": [
       "lib/RV_Updater.php"
     ]
   },
   "extra": {
-    "installer-paths": {
-      "vendor/advanced-custom-fields": [ "wpackagist-plugin/advanced-custom-fields" ]
+    "imposter": {
+      "namespace": "WP_Plugin_Template\\Dependencies",
+      "excludes": []
     }
   },
   "require": {
     "php": ">=7.3",
-    "composer/installers": "~2.0",
-    "wpackagist-plugin/advanced-custom-fields": "~5.10",
     "ext-dom": "*",
-    "ext-libxml": "*"
+    "ext-libxml": "*",
+    "cedaro/wp-plugin": "^0.4.0",
+    "composer/installers": "^2.0",
+    "micropackage/requirements": "^1.1"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
@@ -56,6 +51,7 @@
     "phpcompatibility/php-compatibility": "*",
     "phpcompatibility/phpcompatibility-wp": "*",
     "squizlabs/php_codesniffer": "*",
-    "wp-coding-standards/wpcs": "^2.3"
+    "wp-coding-standards/wpcs": "^2.3",
+    "typisttech/imposter-plugin": "dev-master"
   }
 }
