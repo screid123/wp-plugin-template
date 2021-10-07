@@ -11,7 +11,7 @@ external hosting via AWS, and automated releases through GitHub Actions. Also ut
    - `namespace WP_Plugin_Template`
    - `@package WP_Plugin_Template`
    - `use WP_Plugin_Template\...`
-   > NOTE: Basically find all instances of "WP_Plugin_Template" and replace with your custom "Vendor\Namespace" value.
+   > **NOTE:** Basically find all instances of "WP_Plugin_Template" and replace with your custom "Vendor\Namespace" value.
 2. Update `composer.json` with your settings, paying special attention to the following keys:
    - `name` - Adjust to match your namespace, but lower-cased
    - `autoload.psr-4` - Adjust to match your namespace
@@ -25,7 +25,9 @@ external hosting via AWS, and automated releases through GitHub Actions. Also ut
 5. Update the "Release" workflow (`./github/workflows/release.yml`) environment variables (lines 13-15):
    - `PLUGIN_SLUG` - Should match `slug` in `plugin-info.yml`
    - `DOWNLOAD_URI` - Should match `download_uri` in `plugin-info.yml`
-   - `DEST_DIR` - Should be the relative path of `DOWNLOAD_URI`, e.g. - `https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/` would be `wordpress-plugins/wp-plugin-template` (no leading or trailing slash!)
+   - `DEST_DIR` - Should be the relative path of `DOWNLOAD_URI`, e.g. - 
+     `https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/` would be `wordpress-plugins/wp-plugin-template`
+     (no leading or trailing slash!)
 6. Update this README.md file with your own info!
 7. Follow the [Development](#development) and [Release](#release) instructions below!
 
@@ -41,7 +43,7 @@ package for local development.
    ```
 3. Install NPM and Composer dependencies.
    ```bash
-   $ npm install
+   $ npm ci
    $ composer install
    ```
 4. Start the local development server.
@@ -50,10 +52,11 @@ package for local development.
    ```
 5. Navigate to http://localhost:8888 in your web browser to see WordPress running with the local WordPress plugin or
    theme running and activated.
-6. **The plugin is not active by default!** Log into the WordPress Admin (http://localhost:8888/wp-admin/), navigate to
-   the plugins menu and activate the plugin (install and activate any other plugins desired as well).
+6. **The plugin is not active by default!** This is on purpose in order to help test any activation hooks. Log into the 
+   WordPress Admin (http://localhost:8888/wp-admin/), navigate to the plugins menu and activate the plugin (install and 
+   activate any other plugins desired as well).
    > **NOTE:** The default credentials are username: `admin` password: `password`.
-7. Start the webpack dev server to watch CSS and JS files for changes, and automatically recompile:
+7. Start the webpack dev server to watch PHP, CSS and JS files for changes, and automatically recompile:
    ```bash
    $ npm run dev
    ```
@@ -69,14 +72,13 @@ package for local development.
    [Semantic Versioning](https://semver.org/spec/v2.0.0.html)).
 2. Update the `.ci/data/changelog.yml` file with the corresponding version and changes. Changelog updates are
    **required** for publishing a release.
-   > **NOTE:** If `version` in `changelog.yml` does not match the `version` in `package.json`, the build will fail.
+   > **NOTE:** If the `version` in `package.json` does not match a `tag_name` in `changelog.yml`, the build will fail.
 3. Run the release command to compile all files and generate corresponding markdown files (e.g. - `CHANGELOG.md`).
    ```bash
    $ npm run release
    ```
 4. Commit all changed files to your branch.
-5. Open a [Pull Request](https://github.com/CreditCardsCom/wp-media-credit/pulls) for your branch to be merged into the
-   `main` branch.
+5. Open a Pull Request for your branch to be merged into the `main` branch.
 6. Upon approval, merge the Pull Request using the "Squash & Merge" option.
 7. To release the new version, add a lightweight tag with a semantic version prefixed with `v` (if a pre-release, add a
    `-rc.X` suffix, where `X` is the release candidate increment):
