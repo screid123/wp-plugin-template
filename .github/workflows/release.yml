@@ -9,6 +9,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      PLUGIN_SLUG: "wp-plugin-template"
+      DOWNLOAD_URI: "https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/" # trailing slash!
+      DEST_DIR: "wordpress-plugins/wp-plugin-template" # no leading or trailing slash!
     steps:
       - name: 'Checkout repo.'
         uses: actions/checkout@v2
@@ -71,8 +75,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token.
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the 'create_release' step to get its outputs object, which include a `upload_url`.
-          asset_path: dist/rv-media-credit-${{ steps.get_version.outputs.tag_name }}.zip
-          asset_name: rv-media-credit-${{ steps.get_version.outputs.tag_name }}.zip
+          asset_path: dist/${{ env.PLUGIN_SLUG }}-${{ steps.get_version.outputs.tag_name }}.zip
+          asset_name: ${{ env.PLUGIN_SLUG }}-${{ steps.get_version.outputs.tag_name }}.zip
           asset_content_type: application/zip
       - name: 'Remove “release_notes.txt” before uploading to S3.'
         run: rm -f release_notes.txt
@@ -91,7 +95,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "dist"
-          DEST_DIR: "wordpress-plugins/rv-media-credit"
+          DEST_DIR: ${{ env.DEST_DIR }}
       - name: 'Purge ”manifest.json” cache.'
         if: success()
-        run: curl -X PURGE https://cdn.ccstatic.com/wordpress-plugins/rv-media-credit/manifest.json
+        run: curl -X PURGE "${DOWNLOAD_URI}manifest.json"
