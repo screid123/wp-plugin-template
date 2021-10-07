@@ -273,12 +273,6 @@ exports.build = gulp.series(
 	gulp.parallel(changelog, releaseNotes, manifest, readme),
 );
 exports.clean = clean;
-exports.release = gulp.series(
-	clean,
-	gulp.parallel(build, copy),
-	gulp.parallel(changelog, releaseNotes, manifest, readme),
-	zip
-);
 exports.test = test;
 exports.watch = watch;
 exports.zip = zip;
