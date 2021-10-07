@@ -74,6 +74,10 @@ final class Bootstrap {
 		}
 
 		$plugin = PluginFactory::create( PluginInfo::plugin_slug(), PluginInfo::main_plugin_file() );
+		$plugin
+			->register_hooks( new Settings() )
+			->register_hooks( new Frontend() )
+			->register_hooks( new Admin() );
 	}
 
 }
