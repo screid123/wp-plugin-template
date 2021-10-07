@@ -1,6 +1,9 @@
 # wp-plugin-template
 
-Template repo for WordPress plugin development that uses Composer to manage dependencies.
+Template repo for WordPress plugin development that uses Composer to manage dependencies (along with 
+[package scoping](https://github.com/TypistTech/imposter-plugin) to prevent collisions), a gulp workflow for development, 
+external hosting via AWS, and automated releases through GitHub Actions. Also utilizes the 
+[WordPress Plugin Library](https://github.com/cedaro/wp-plugin) to help structure plugin classes.
 
 ## Getting started with this template
 
@@ -23,6 +26,7 @@ Template repo for WordPress plugin development that uses Composer to manage depe
    - `PLUGIN_SLUG` - Should match `slug` in `plugin-info.yml`
    - `DOWNLOAD_URI` - Should match `download_uri` in `plugin-info.yml`
    - `DEST_DIR` - Should be the relative path of `DOWNLOAD_URI`, e.g. - `https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/` would be `wordpress-plugins/wp-plugin-template` (no leading or trailing slash!)
+6. Update this README.md file with your own info!
 7. Follow the [Development](#development) and [Release](#release) instructions below!
 
 ## Development
