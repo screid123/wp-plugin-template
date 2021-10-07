@@ -11,7 +11,7 @@ releases:
     tag_name: v1.0.0
     prerelease: false
     link: false
-    date: false
+    date: "2021-10-01"
     notice: false
     added: false
     changed: false
