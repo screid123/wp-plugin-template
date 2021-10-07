@@ -3,7 +3,7 @@ name: "WP Plugin Template"
 slug: "wp-plugin-template" # This should match the entry file's name
 text_domain: "wp-plugin-template"
 uri: "https://github.com/screid123/wp-plugin-template"
-download_uri: "https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/"
+download_uri: "https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/" # This is where the plugin ZIP will be uploaded when new versions are released.
 author: "Your Name"
 author_uri: "https://your-domain.com/or/github-profile/"
 requires: "5.5.1"
