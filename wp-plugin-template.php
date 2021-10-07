@@ -1,52 +1,40 @@
 <?php
 /**
- * __NAME__
- *
- * @package     Red_Ventures\Media_Credit
- * @author      __AUTHOR__
- * @copyright   2021 __AUTHOR__
+ * @package     WP_Plugin_Template
+ * @author      {{AUTHOR}}
+ * @copyright   2021 {{AUTHOR}}
  * @license     GPLv3-or-later
- * @link        https://github.com/CreditCardsCom/wp-media-credit
+ * @link        {{URI}}
  *
  * @wordpress-plugin
- * Plugin Name:     WP Plugin Template
- * Plugin URI:      https://github.com/screid123/wp-plugin-template
- * Description:     __DESCRIPTION__
- * Version:         __VERSION__
- * Author:          __AUTHOR__
- * Author URI:      __AUTHOR_URI__
+ * Plugin Name:     {{NAME}}
+ * Plugin URI:      {{URI}}
+ * Description:     {{SHORT_DESCRIPTION}}
+ * Version:         {{VERSION}}
+ * Author:          {{AUTHOR}}
+ * Author URI:      {{AUTHOR_URI}}
  * License:         GPLv3 or later
  * License URI:     https://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:     wp-plugin-template
+ * Text Domain:     {{TEXT_DOMAIN}}
  */
 
+// Cannot `declare( strict_types=1 );` to avoid fatal if prior to PHP 7.0.0, since we did not yet verify the PHP version.
+
+namespace WP_Plugin_Template;
+
 // Abort if this file is called directly.
-defined( 'WPINC' ) || die;
-
-// Constants
-const RV_MEDIA_CREDIT_VERSION = '__VERSION__';
-if ( ! defined( 'WP_PLUGIN_TEMPLATE_FILE' ) ) {
-	define( 'WP_PLUGIN_TEMPLATE_FILE', __FILE__ );
-}
-if ( ! defined( 'WP_PLUGIN_TEMPLATE_PATH' ) ) {
-	define( 'WP_PLUGIN_TEMPLATE_PATH', __DIR__ );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-// Load the Composer autoloader + dependencies.
+// Composer autoloader.
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once( __DIR__ . '/vendor/autoload.php' );
 }
 
-// Setup RV_Updater
-if ( function_exists( 'rv_register_plugin_update' ) ) {
-	rv_register_plugin_update( [
-		'id'       => 'wp-plugin-template',
-		'manifest' => 'https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/manifest.json',
-		'entry'    => __FILE__,
-	] );
-}
 
-// Initialize and run the plugin.
-add_action( 'plugins_loaded', static function() {
-	// Run plugin setup.
-} );
+// Initialize the plugin.
+if ( ! wp_installing() ) {
+	add_action( 'plugins_loaded', static function() {
+	} );
+}
