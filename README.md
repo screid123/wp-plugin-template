@@ -28,8 +28,14 @@ external hosting via AWS, and automated releases through GitHub Actions. Also ut
    - `DEST_DIR` - Should be the relative path of `DOWNLOAD_URI`, e.g. - 
      `https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/` would be `wordpress-plugins/wp-plugin-template`
      (no leading or trailing slash!)
-6. Update this README.md file with your own info!
-7. Follow the [Development](#development) and [Release](#release) instructions below!
+6. Update `phpcs.xml`, specifically:
+   - `minimum_supported_wp_version`
+   - `testVersion`
+   - `text_domain` (in `WordPress.WP.I18n`)
+   - `minimum_supported_version` (in `WordPress.WP.DeprecatedFunctions`)
+   - `prefixes` (in `WordPress.NamingConventions.PrefixAllGlobals`)
+7. Update this README.md file with your own info!
+8. Follow the [Development](#development) and [Release](#release) instructions below!
 
 ## Development
 
@@ -89,7 +95,7 @@ package for local development.
    $ git push --tags
    ```
    This will kick off the automated release workflow in GitHub Actions which builds the plugin ZIP, publishes a new
-   [release](https://github.com/CreditCardsCom/wp-media-credit/releases) with the changelog update, attaches the ZIP as
-   a release artifact, and pushes the ZIP and a `manifest.json` to the S3 bucket for distribution.
+   release with the changelog update, attaches the ZIP as a release artifact, and pushes the ZIP and a `manifest.json` 
+   to the S3 bucket for distribution.
    > **NOTE:** Pre-release assets **will not** be uploaded to S3 and thus **will not** prompt for an update in the
    > WordPress Admin.
