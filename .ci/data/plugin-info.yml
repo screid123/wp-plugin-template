@@ -1,10 +1,11 @@
 ---
 name: "WP Plugin Template"
-slug: "wp-plugin-template"
+slug: "wp-plugin-template" # This should match the entry file's name
+text_domain: "wp-plugin-template"
 uri: "https://github.com/screid123/wp-plugin-template"
 download_uri: "https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/"
 author: "Your Name"
-author_uri: "https://your-domain.com/or-github-profile/"
+author_uri: "https://your-domain.com/or/github-profile/"
 requires: "5.5.1"
 tested: "5.8.1"
 requires_php: "7.3"
