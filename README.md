@@ -16,26 +16,35 @@ external hosting via AWS, and automated releases through GitHub Actions. Also ut
    - `name` - Adjust to match your namespace, but lower-cased
    - `autoload.psr-4` - Adjust to match your namespace
    - `extra.imposter.namespace` - Adjust to match your namespace (keep the "\\Dependencies" tail)
-3. Update `.ci/data/plugin-info.yml` with your own information.
-4. Update your project/repo's Secrets for use with GitHub Actions:
+3. Update `package.json` and reset the version to `1.0.0` (or whatever you want the initial version to be)
+4. Update `.ci/data/changelog.yml` and remove all `releases` but one, and change the `tag_name` and `name` to reflect 
+   the version in `package.json`  
+5. Update `.ci/data/plugin-info.yml` with your own information.
+6. Update your project/repo's Secrets for use with GitHub Actions:
    - `AWS_S3_BUCKET`
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
    - `AWS_REGION`
-5. Update the "Release" workflow (`./github/workflows/release.yml`) environment variables (lines 13-15):
+7. Update the "Release" workflow (`./github/workflows/release.yml`) environment variables (lines 13-15):
    - `PLUGIN_SLUG` - Should match `slug` in `plugin-info.yml`
    - `DOWNLOAD_URI` - Should match `download_uri` in `plugin-info.yml`
    - `DEST_DIR` - Should be the relative path of `DOWNLOAD_URI`, e.g. - 
      `https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/` would be `wordpress-plugins/wp-plugin-template`
      (no leading or trailing slash!)
-6. Update `phpcs.xml`, specifically:
+8. Update `phpcs.xml`, specifically:
    - `minimum_supported_wp_version`
    - `testVersion`
    - `text_domain` (in `WordPress.WP.I18n`)
    - `minimum_supported_version` (in `WordPress.WP.DeprecatedFunctions`)
    - `prefixes` (in `WordPress.NamingConventions.PrefixAllGlobals`)
-7. Update this README.md file with your own info!
-8. Follow the [Development](#development) and [Release](#release) instructions below!
+9. Update this README.md file with your own info!
+10. Delete both `composer.lock` and `package-lock.json` and then run the following:
+    ```bash
+    $ composer install
+    $ npm install
+    ```
+    > **NOTE:** Make sure to commit the new `composer.lock` and `package-lock.json` files that are generated!
+12. Follow the [Development](#development) and [Release](#release) instructions below!
 
 ## Development
 
