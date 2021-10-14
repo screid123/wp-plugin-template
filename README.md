@@ -46,6 +46,17 @@ external hosting via AWS, and automated releases through GitHub Actions. Also ut
     > **NOTE:** Make sure to commit the new `composer.lock` and `package-lock.json` files that are generated!
 12. Follow the [Development](#development) and [Release](#release) instructions below!
 
+## Installation
+
+To install this plugin:
+
+1. [Download the latest release](https://github.com/screid123/wp-plugin-template/releases) from GitHub (the saved file
+   should be named wp-plugin-template-{version}.zip).
+2. Go to the _Plugins → Add New_ screen in the WordPress Admin.
+3. Click the **Upload** button at the top next to the "Add Plugins" title.
+4. Upload the zip file downloaded in the first step.
+5. Click the **Activate Plugin** link after installation completes.
+
 ## Development
 
 This plugin uses [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/)
