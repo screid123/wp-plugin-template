@@ -31,7 +31,8 @@
     "ext-libxml": "*",
     "cedaro/wp-plugin": "^0.4.0",
     "composer/installers": "^2.0",
-    "micropackage/requirements": "^1.1"
+    "micropackage/requirements": "^1.1",
+    "pimple/pimple": "^3.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
