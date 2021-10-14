@@ -19,6 +19,20 @@ use WP_Plugin_Template\Dependencies\Cedaro\WP\Plugin\AbstractHookProvider;
 class Frontend extends AbstractHookProvider {
 
 	/**
+	 * @var Settings
+	 */
+	private $settings;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Settings $settings
+	 */
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function register_hooks(): void {
@@ -36,24 +50,24 @@ class Frontend extends AbstractHookProvider {
 	 * @link https://developer.wordpress.org/reference/hooks/wp_enqueue_scripts/
 	 */
 	public function load_assets(): void {
-		$handle 	  = PluginInfo::get_asset_handle( 'frontend' );
-		$script_asset = file_exists( PluginInfo::get_assets_path_base() . 'frontend.asset.php' )
-			? include( PluginInfo::get_assets_path_base() . 'frontend.asset.php' )
+		$handle 	  = $this->plugin->get_slug() . '-frontend';
+		$script_asset = file_exists( $this->plugin->get_path( '/assets/frontend.asset.php' ) )
+			? include( $this->plugin->get_path( '/assets/frontend.asset.php' ) )
 			: [ 'version' => microtime(), 'dependencies' => [ 'wp-polyfill' ] ];
 
-		if ( file_exists( PluginInfo::get_assets_path_base() . 'frontend.css' ) ) {
+		if ( file_exists( $this->plugin->get_path( '/assets/frontend.css' ) ) ) {
 			wp_enqueue_style(
 				$handle,
-				PluginInfo::get_assets_url_base() . 'frontend.css',
+				$this->plugin->get_url( '/assets/frontend.css' ),
 				[],
 				$script_asset['version']
 			);
 		}
 
-		if ( file_exists( PluginInfo::get_assets_path_base() . 'frontend.js' ) ) {
+		if ( file_exists( $this->plugin->get_path( '/assets/frontend.js' ) ) ) {
 			wp_enqueue_script(
 				$handle,
-				PluginInfo::get_assets_url_base() . 'frontend.js',
+				$this->plugin->get_url( '/assets/frontend.js' ),
 				$script_asset['dependencies'],
 				$script_asset['version'],
 				true

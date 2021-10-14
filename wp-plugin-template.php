@@ -27,6 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+const VERSION = '{{VERSION}}';
+
 // Composer autoloader.
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once( __DIR__ . '/vendor/autoload.php' );
@@ -39,8 +41,7 @@ register_activation_hook( __FILE__, [ __NAMESPACE__ . '\Activator', 'activate' ]
 register_deactivation_hook( __FILE__, [ __NAMESPACE__ . '\Deactivator', 'deactivate' ] );
 
 // Initialize the plugin.
-if ( ! wp_installing() ) {
-	add_action( 'plugins_loaded', static function() {
-		( new Bootstrap() )->init();
-	} );
+if ( function_exists( 'wp_installing' ) && ! wp_installing() ) {
+	$plugin = new Bootstrap( __FILE__ );
+	add_action( 'plugins_loaded', [ $plugin, 'init' ] );
 }

@@ -33,51 +33,68 @@ final class Bootstrap {
 	];
 
 	/**
-	 * @var Requirements;
+	 * @var Container;
 	 */
-	private $requirements;
+	private $container;
+
+	/**
+	 * @var Plugin;
+	 */
+	private $plugin;
 
 	/**
 	 * Constructor.
+	 *
+	 * @param string $entry Entry file path.
 	 */
-	public function __construct() {
+	public function __construct( string $entry ) {
 		// Register with RV_Updater
 		if ( function_exists( 'rv_register_plugin_update' ) ) {
 			rv_register_plugin_update( [
-				'id'       => PluginInfo::plugin_slug(),
+				'id'       => '{{SLUG}}',
 				'manifest' => '{{DOWNLOAD_URI}}manifest.json',
-				'entry'    => PluginInfo::main_plugin_file(),
+				'entry'    => $entry,
 			] );
 		}
 
 		// Run requirements check.
-		$this->requirements = new Requirements( PluginInfo::get_plugin_display_name(), [
-			'php'    	=> PluginInfo::required_min_php_version(),
-			'wp'     	=> PluginInfo::required_min_wp_version(),
-			'plugins'	=> self::$required_plugins,
+		$requirements = new Requirements( '{{NAME}}', [
+			'php'     => '{{REQUIRES_PHP}}',
+			'wp'      => '{{REQUIRES}}',
+			'plugins' => self::$required_plugins,
 		] );
+
+		// If the requirements are not met, notify and exit.
+		if ( ! $requirements->satisfied() ) {
+			$requirements->print_notice();
+			return;
+		}
+
+		// Create the container and register the service provider.
+		$this->container = new Container();
+		$this->container->register( new ServiceProvider() );
+
+		// Initialize the plugin and inject the container.
+		$this->plugin = ( new Plugin() )
+			->set_basename( plugin_basename( $entry ) )
+			->set_container( $this->container )
+			->set_directory( plugin_dir_path( $entry ) )
+			->set_file( $entry )
+			->set_slug( '{{SLUG}}' )
+			->set_url( plugin_dir_url( $entry ) );
     }
 
 	/**
 	 * Begins execution of the plugin.
-	 *
-	 * Since everything within the plugin is registered via hooks, then kicking off the plugin from this point in the file
-	 * does not affect the page life cycle.
-	 *
-	 * Also returns copy of the app object so 3rd party developers can interact with the plugin's hooks contained within.
 	 */
 	public function init(): void {
-		// If the requirements are not met, notify and exit.
-		if ( ! $this->requirements->satisfied() ) {
-			$this->requirements->print_notice();
-			return;
+		if ( ! empty( $this->plugin ) ) {
+			// Register hook providers.
+			$this->plugin
+				->register_hooks( $this->container->get( 'settings' ) )
+				->register_hooks( $this->container->get( 'admin' ) )
+				->register_hooks( $this->container->get( 'frontend' ) );
 		}
-
-		$plugin = PluginFactory::create( PluginInfo::plugin_slug(), PluginInfo::main_plugin_file() );
-		$plugin
-			->register_hooks( new Settings() )
-			->register_hooks( new Frontend() )
-			->register_hooks( new Admin() );
 	}
 
 }
