@@ -72,7 +72,7 @@ final class Bootstrap {
 
 		// Create the container and register the service provider.
 		$this->container = new Container();
-		$this->container->register( new ServiceProvider() );
+		$this->container->register( new Services() );
 
 		// Initialize the plugin and inject the container.
 		$this->plugin = ( new Plugin() )
