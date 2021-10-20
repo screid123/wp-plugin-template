@@ -9,7 +9,6 @@
 
 namespace WP_Plugin_Template;
 
-use WP_Plugin_Template\Dependencies\Cedaro\WP\Plugin\PluginFactory;
 use WP_Plugin_Template\Dependencies\Micropackage\Requirements\Requirements;
 
 /**
@@ -80,6 +79,7 @@ final class Bootstrap {
 			->set_container( $this->container )
 			->set_directory( plugin_dir_path( $entry ) )
 			->set_file( $entry )
+			->set_prefix( '{{SLUG}}' )
 			->set_slug( '{{SLUG}}' )
 			->set_url( plugin_dir_url( $entry ) );
     }
