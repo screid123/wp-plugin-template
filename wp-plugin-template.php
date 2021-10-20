@@ -41,7 +41,7 @@ register_activation_hook( __FILE__, [ __NAMESPACE__ . '\Activator', 'activate' ]
 register_deactivation_hook( __FILE__, [ __NAMESPACE__ . '\Deactivator', 'deactivate' ] );
 
 // Initialize the plugin.
-if ( function_exists( 'wp_installing' ) && ! wp_installing() ) {
+if ( function_exists( 'wp_installing' ) && ! wp_installing() && class_exists( __NAMESPACE__ . '\Bootstrap' ) ) {
 	$plugin = new Bootstrap( __FILE__ );
 	add_action( 'plugins_loaded', [ $plugin, 'init' ] );
 }
