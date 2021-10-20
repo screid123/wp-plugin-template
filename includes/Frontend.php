@@ -4,7 +4,6 @@
  *
  * @package WP_Plugin_Template
  */
-
 declare( strict_types=1 );
 
 namespace WP_Plugin_Template;
