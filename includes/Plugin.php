@@ -4,6 +4,8 @@
  *
  * @package WP_Plugin_Template;
  */
+declare( strict_types=1 );
+
 namespace WP_Plugin_Template;
 
 use WP_Plugin_Template\Dependencies\Cedaro\WP\Plugin\Plugin as BasePlugin;
@@ -41,17 +43,9 @@ class Plugin extends BasePlugin {
 	 * @param string $prefix
 	 * @return $this
 	 */
-	protected function set_prefix( string $prefix ): Plugin {
+	public function set_prefix( string $prefix ): Plugin {
 		$this->prefix = str_replace( '-', '_', sanitize_key( $prefix ) );
 		return $this;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function set_slug( $slug ): Plugin {
-		$this->set_prefix( $slug );
-		return parent::set_slug( $slug );
 	}
 
 }
