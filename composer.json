@@ -16,6 +16,7 @@
       "WP_Plugin_Template\\": "includes/"
     },
     "files": [
+      "includes/functions.php",
       "lib/RV_Updater.php"
     ]
   },
