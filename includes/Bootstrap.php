@@ -9,7 +9,6 @@
 
 namespace WP_Plugin_Template;
 
-use WP_Plugin_Template\Dependencies\Cedaro\WP\Plugin\PluginFactory;
 use WP_Plugin_Template\Dependencies\Micropackage\Requirements\Requirements;
 
 /**
@@ -72,7 +71,7 @@ final class Bootstrap {
 
 		// Create the container and register the service provider.
 		$this->container = new Container();
-		$this->container->register( new ServiceProvider() );
+		$this->container->register( new Services() );
 
 		// Initialize the plugin and inject the container.
 		$this->plugin = ( new Plugin() )
@@ -80,6 +79,7 @@ final class Bootstrap {
 			->set_container( $this->container )
 			->set_directory( plugin_dir_path( $entry ) )
 			->set_file( $entry )
+			->set_prefix( '{{SLUG}}' )
 			->set_slug( '{{SLUG}}' )
 			->set_url( plugin_dir_url( $entry ) );
     }

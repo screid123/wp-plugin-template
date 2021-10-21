@@ -34,6 +34,13 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once( __DIR__ . '/vendor/autoload.php' );
 }
 
+// Display a notice and bail if dependencies are missing.
+if ( ! class_exists( __NAMESPACE__ . '\Bootstrap' ) ) {
+	require_once(__DIR__ . '/includes/functions.php');
+	add_action( 'admin_notices', __NAMESPACE__ . '\display_missing_dependencies_notice' );
+	return;
+}
+
 // Register activation hook.
 register_activation_hook( __FILE__, [ __NAMESPACE__ . '\Activator', 'activate' ] );
 

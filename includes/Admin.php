@@ -4,7 +4,6 @@
  *
  * @package WP_Plugin_Template
  */
-
 declare( strict_types=1 );
 
 namespace WP_Plugin_Template;
@@ -110,20 +109,21 @@ class Admin extends AbstractHookProvider {
 				$script_asset['version'],
 				true
 			);
+
+			/**
+			 * Use `wp_localize_script` to add info for REST calls, e.g. - base URL, nonce, environment, etc.
+			 * This creates a global on the page using a camelCased version of the plugin slug prefixed with an underscore.
+			 * Example: wp-plugin-template -> _wpPluginTemplate
+			 */
+			$object_name = '_' . lcfirst( str_replace( ' ', '', ucwords( strtr( $this->plugin->get_slug(), '_-', '  ') ) ) );
+			wp_localize_script( $handle, $object_name, [
+				'env'    	=> constant( 'PANTHEON_ENVIRONMENT' ) ?? 'live',
+				'baseUrl'	=> esc_url( get_rest_url( get_current_network_id() ) ),
+				'nonce'  	=> wp_create_nonce( 'wp_rest' ),
+				// More?
+			] );
 		}
 
-		/**
-		 * Use `wp_localize_script` to add info for REST calls, e.g. - base URL, nonce, environment, etc.
-		 * This creates a global on the page using a camelCased version of the plugin slug prefixed with an underscore.
-		 * Example: wp-plugin-template -> _wpPluginTemplate
-		 */
-		$object_name = '_' . lcfirst( str_replace( ' ', '', ucwords( strtr( $this->plugin->get_slug(), '_-', '  ') ) ) );
-		wp_localize_script( $handle, $object_name, [
-			'env'    	=> constant( 'PANTHEON_ENVIRONMENT' ) ?? 'live',
-			'baseUrl'	=> esc_url( get_rest_url( get_current_network_id() ) ),
-			'nonce'  	=> wp_create_nonce( 'wp_rest' ),
-			// More?
-		] );
 	}
 
 

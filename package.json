@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "build": "npm run build:php && npm run build:assets",
     "build:assets": "NODE_ENV=production wp-scripts build assets/js/admin.js assets/js/frontend.js --output-path=build/assets",

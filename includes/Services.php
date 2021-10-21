@@ -1,6 +1,6 @@
 <?php
 /**
- * ServiceProvider class.
+ * Services class.
  *
  * @package WP_Plugin_Template
  */
@@ -16,7 +16,7 @@ use WP_Plugin_Template\Dependencies\Pimple\ServiceProviderInterface;
  *
  * @package WP_Plugin_Template
  */
-class ServiceProvider implements ServiceProviderInterface {
+class Services implements ServiceProviderInterface {
 
 	/**
 	 * @inheritDoc

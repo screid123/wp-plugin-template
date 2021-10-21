@@ -263,7 +263,7 @@ function composerUpdate(cb) {
  * Watch files and build on change.
  */
 function watch() {
-	gulp.watch('./includes/**/*', gulp.series(composerUpdate, build));
+	gulp.watch(['./includes/**/*', './*.php'], gulp.series(composerUpdate, build));
 	gulp.watch(['./lib/**/*', './vendor/**/*'], copy);
 }
 
