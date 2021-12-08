@@ -8,7 +8,7 @@ author: "Your Name"
 author_uri: "https://your-domain.com/or/github-profile/"
 requires: "5.5.1"
 tested: "5.8.1"
-requires_php: "7.3"
+requires_php: "7.4"
 license: "GPLv3 or later"
 license_uri: "https://www.gnu.org/licenses/gpl-3.0.txt"
 contributors:
