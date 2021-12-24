@@ -9,7 +9,7 @@ unreleased:
   notice: false
   added: false
   changed:
-    - The chanagelog "unreleased" now follows the same format as the "releases" and the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
+    - The changelog "unreleased" now follows the same format as the "releases" and the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
   deprecated: false
   removed: false
   fixed: false
