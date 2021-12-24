@@ -5,7 +5,15 @@ summary: |-
 
   The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-unreleased: false
+unreleased:
+  notice: false
+  added: false
+  changed:
+    - The changelog "unreleased" now follows the same format as the "releases" and the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
+  deprecated: false
+  removed: false
+  fixed: false
+  security: false
 releases:
   - name: v1.0.2
     tag_name: v1.0.2

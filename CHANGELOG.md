@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/screid123/wp-plugin-template/compare/v1.0.2...HEAD)
 
+### 👌 Changed
+- The changelog "unreleased" now follows the same format as the "releases" and the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
+
 ## v1.0.2 - 2021-10-21
 
 ### 📦 Added
