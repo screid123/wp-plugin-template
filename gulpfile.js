@@ -267,6 +267,37 @@ function watch() {
 	gulp.watch(['./lib/**/*', './vendor/**/*'], copy);
 }
 
+/**
+ *
+ * @param dir
+ * @returns {string[]}
+ */
+function getZips(dir) {
+	return fs.readdirSync(dir)
+		.filter(function (file) {
+			return file.endsWith(".zip");
+		});
+}
+
+/**
+ * Unzip included plugins to an ignored repo for local dev
+ */
+function installPlugins(cb) {
+	log('Installing plugins for local dev...');
+
+	const dir = './.ci/plugins/';
+	const zips = getZips(dir);
+
+	return zips.map(function( zip ) {
+		return gulp.src(`${dir}${zip}`)
+			.pipe(require('gulp-unzip')({ keepEmpty: true }))
+			.pipe(gulp.dest('./.plugins/', { overwrite: true }))
+			.on('end', function() {
+				cb();
+			});
+	});
+}
+
 exports.build = gulp.series(
 	clean,
 	gulp.parallel(build, copy),
@@ -276,3 +307,4 @@ exports.clean = clean;
 exports.test = test;
 exports.watch = watch;
 exports.zip = zip;
+exports.install = installPlugins;

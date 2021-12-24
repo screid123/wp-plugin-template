@@ -156,7 +156,18 @@ class Admin extends AbstractHookProvider {
 	 * @return string
 	 */
 	private function required_capability(): string {
-		return apply_filters( $this->plugin->get_prefix() . '/required_capability', 'manage_options' );
+		return apply_filters( $this->get_prefix() . '/required_capability', 'manage_options' );
+	}
+
+	/**
+	 * Set the plugin prefix.
+	 *
+	 * Provided string will be sanitized, and all hyphens replaced with underscores.
+	 *
+	 * @return string
+	 */
+	private function get_prefix(): string {
+		return str_replace( '-', '_', sanitize_key( $this->plugin->get_slug() ) );
 	}
 
 }
