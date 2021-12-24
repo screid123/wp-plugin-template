@@ -37,7 +37,7 @@ external hosting via AWS, and automated releases through GitHub Actions. Also ut
    - `text_domain` (in `WordPress.WP.I18n`)
    - `minimum_supported_version` (in `WordPress.WP.DeprecatedFunctions`)
    - `prefixes` (in `WordPress.NamingConventions.PrefixAllGlobals`)
-9. Add any plugin dependencies you want included for local development as ZIP files to `.ci/plugins`
+9. Add or remove any plugin ZIP files dependencies for local development to `.ci/plugins`
    - These should be "private" plugins that otherwise cannot be found through WP Admin, or the minimum supported version
      of required plugins
    - Make sure to update the `"mappings"` or `"plugins"` config in `.wp-env.json` to point to the plugins (which will be
