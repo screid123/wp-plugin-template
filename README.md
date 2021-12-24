@@ -37,8 +37,13 @@ external hosting via AWS, and automated releases through GitHub Actions. Also ut
    - `text_domain` (in `WordPress.WP.I18n`)
    - `minimum_supported_version` (in `WordPress.WP.DeprecatedFunctions`)
    - `prefixes` (in `WordPress.NamingConventions.PrefixAllGlobals`)
-9. Update this README.md file with your own info!
-10. Delete both `composer.lock` and `package-lock.json` and then run the following:
+9. Add any plugin dependencies you want included for local development as ZIP files to `.ci/plugins`
+   - These should be "private" plugins that otherwise cannot be found through WP Admin, or the minimum supported version
+     of required plugins
+   - Make sure to update the `"mappings"` or `"plugins"` config in `.wp-env.json` to point to the plugins (which will be
+     unzipped into `.plugins/`)
+10. Update this README.md file with your own info!
+11. Delete both `composer.lock` and `package-lock.json` and then run the following:
     ```bash
     $ composer install
     $ npm install
