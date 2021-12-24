@@ -1,7 +1,7 @@
 {{#*inline "keepachangelog"}}
 {{~#if notice}}
+> 📢 NOTICE: {{& notice}}
 
-	> 📢 NOTICE: {{& notice}}
 {{/if}}
 {{#if breaking~}}
 ### ‼️ Breaking Changes
@@ -58,9 +58,9 @@
 
 ## [Unreleased]({{plugin.uri}}/compare/{{#with (lookup changelog.releases 0)~}}{{tag_name}}{{/with}}...HEAD)
 {{#with changelog.unreleased}}
+
 {{> keepachangelog}}
 {{/with}}
-
 {{#each changelog.releases}}
 {{#if link}}
 ## [{{name}}]({{../../plugin.uri}}{{link}}) - {{date}}
