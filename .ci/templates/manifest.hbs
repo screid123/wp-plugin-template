@@ -2,7 +2,7 @@
 	"name": "{{plugin.name}}",
 	"author": "{{#if plugin.author_uri}}<a href=\"{{plugin.author_uri}}\">{{plugin.author}}</a>{{else}}{{plugin.author}}{{/if}}",
 	"version": "{{version}}",
-	"homepage": "{{changelog.repo}}",
+	"homepage": "{{plugin.uri}}",
 	"download_link" : "{{plugin.download_uri}}{{plugin.slug}}-v{{version}}.zip",
 	"requires": "{{plugin.requires}}",
 	"tested": "{{plugin.tested}}",
@@ -40,5 +40,5 @@
 		{{~#if removed~}}{{~#each removed~}}<li>🚫 Removed: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
 		{{~#if fixed~}}{{~#each fixed~}}<li>🐛 Fixed: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
 		{{~#if security~}}{{~#each security~}}<li>🚨 Security: {{& format (markdown this)}}</li>{{~/each~}}{{~/if~}}
-	</ul>{{~/each}}<p><a href='{{ changelog.repo }}/blob/master/CHANGELOG.md'>View the full changelog</a></p>"
+	</ul>{{~/each}}<p><a href='{{plugin.uri}}/blob/master/CHANGELOG.md'>View the full changelog</a></p>"
 }

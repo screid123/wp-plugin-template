@@ -7,6 +7,7 @@ summary: |-
   and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 unreleased:
   notice: false
+  breaking: false
   added: false
   changed:
     - The changelog "unreleased" now follows the same format as the "releases" and the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
@@ -21,6 +22,7 @@ releases:
     link: false
     date: "2021-10-21"
     notice: false
+    breaking: false
     added:
       - Added Pimple container for dependency injection, and new `/includes/Services.php` to manage the dependencies/services.
       - New `/includes/functions.php` for loading global (namespaced) functions.
@@ -39,6 +41,7 @@ releases:
     link: false
     date: "2021-10-07"
     notice: false
+    breaking: false
     added: false
     changed: false
     deprecated: false
@@ -52,6 +55,7 @@ releases:
     link: false
     date: "2021-10-01"
     notice: false
+    breaking: false
     added: false
     changed: false
     deprecated: false
