@@ -40,7 +40,7 @@ jobs:
             ${{ runner.os }}-release-
             ${{ runner.os }}-
       - name: 'Install Composer dependencies.'
-        run: composer install
+        run: composer install --no-dev --optimize-autoloader --classmap-authoritative
       - name: 'Install NPM dependencies.'
         run: npm ci --ignore-scripts --no-optional 
       - name: 'Build plugin assets.'
