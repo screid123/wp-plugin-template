@@ -6,7 +6,12 @@
   "prefer-stable": true,
   "config": {
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "typisttech/imposter-plugin": true
+    }
   },
   "autoload": {
     "classmap": [
@@ -33,7 +38,8 @@
     "cedaro/wp-plugin": "^0.4.0",
     "composer/installers": "^2.0",
     "micropackage/requirements": "^1.1",
-    "pimple/pimple": "^3.0"
+    "pimple/pimple": "^3.0",
+    "typisttech/imposter-plugin": "^0.6.2"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
@@ -41,7 +47,6 @@
     "phpcompatibility/php-compatibility": "*",
     "phpcompatibility/phpcompatibility-wp": "*",
     "squizlabs/php_codesniffer": "*",
-    "wp-coding-standards/wpcs": "^2.3",
-    "typisttech/imposter-plugin": "dev-master"
+    "wp-coding-standards/wpcs": "^2.3"
   }
 }
