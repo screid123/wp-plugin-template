@@ -286,7 +286,16 @@ function installPlugins(cb) {
 	log('Installing plugins for local dev...');
 
 	const dir = './.ci/plugins/';
+	if (!fs.existsSync(dir)) {
+		log('Nothing to install!');
+		return cb();
+	}
+
 	const zips = getZips(dir);
+	if (zips.length < 1) {
+		log('Nothing to install!');
+		return cb();
+	}
 
 	return zips.map(function( zip ) {
 		return gulp.src(`${dir}${zip}`)
