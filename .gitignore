@@ -50,7 +50,7 @@ Thumbs.db
 *.pem
 
 # -------------------------
-# BEGIN Whitelisted Files
+# BEGIN allowed files
 # -------------------------
 
 !.ci
