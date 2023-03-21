@@ -22,7 +22,7 @@ insert_final_newline = false
 [*.txt]
 trim_trailing_whitespace = false
 
-[*.{md,json,yml}]
+[*.{md,json,yml,yaml}]
 trim_trailing_whitespace = false
 indent_style = space
 indent_size = 2
