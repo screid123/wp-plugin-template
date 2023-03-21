@@ -67,7 +67,7 @@ To install this plugin:
 This plugin uses [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/)
 package for local development.
 
-1. Ensure [Docker](https://docs.docker.com/docker-for-mac/install/) is installed and running.
+1. Ensure Docker is installed and running. [Colima](https://github.com/abiosoft/colima) is highly recommended!
 2. Clone this project to your local machine.
    ```bash
    $ git clone git@github.com:screid123/wp-plugin-template.git
