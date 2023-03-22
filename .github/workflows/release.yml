@@ -15,11 +15,12 @@ jobs:
       DEST_DIR: "wordpress-plugins/wp-plugin-template" # relative path inside S3 bucket; no leading or trailing slash!
     steps:
       - name: 'Checkout repo.'
-        uses: actions/checkout@v2
-      - name: 'Setup Node.'
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v3
+      - name: 'Set up Node'
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version-file: 'package.json' # Uses `engines.node` value!
+          cache: 'npm'
       - name: 'Get the version from tag name.' # https://github.community/t5/GitHub-Actions/How-to-get-just-the-tag-name/m-p/32167#M1027
         id: get_version
         run: echo ::set-output name=tag_name::${GITHUB_REF/refs\/tags\//}
@@ -46,8 +47,6 @@ jobs:
       - name: 'Build plugin assets.'
         run: npm run release
       - name: 'Run tests.'
-        env:
-          TAG_NAME: ${{ steps.get_version.outputs.tag_name }}
         run: npm test
       - name: 'Upload build artifacts.'
         uses: actions/upload-artifact@v2
