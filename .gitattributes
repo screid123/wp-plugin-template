@@ -2,6 +2,7 @@
 
 *.php text eol=lf
 
+.plugins export-ignore
 build export-ignore
 composer.lock -diff
 dist export-ignore
