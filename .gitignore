@@ -60,5 +60,6 @@ Thumbs.db
 !.gitattributes
 !.github/
 !.gitignore
+!.husky/
 !.releaserc
 !.wp-env.json

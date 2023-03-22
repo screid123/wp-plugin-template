@@ -26,6 +26,8 @@
     "wp-env": "wp-env"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.5.0",
+    "@commitlint/config-conventional": "^17.4.4",
     "@wordpress/env": "^5.14.0",
     "@wordpress/scripts": "^26.0.0",
     "grunt": "^1.6.1",
@@ -37,6 +39,7 @@
     "grunt-replace": "^2.0.2",
     "grunt-zip": "^0.20.0",
     "helper-markdown": "^1.0.0",
+    "husky": "^8.0.3",
     "react": "^18.0.0"
   }
 }
