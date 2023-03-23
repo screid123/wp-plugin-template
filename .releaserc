@@ -1,0 +1,11 @@
+tagFormat: "v${version}"
+repositoryUrl: git@github.com:screid123/wp-plugin-template.git
+branches:
+  - main
+plugins:
+  - "@semantic-release/changelog"
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - "@semantic-release/npm"
+  - "@semantic-release/github"
+  - "@semantic-release/git"
