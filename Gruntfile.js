@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 	const pkg = grunt.file.readJSON('package.json');
+
 	const meta = {
 		name: 'WP Plugin Template', // Human-readable name of the plugin
 		slug: '<%= pkg.name %>', // This should match the entry file's name
@@ -103,6 +104,13 @@ module.exports = function(grunt) {
 				],
 			},
 		},
+		// Update this section with any dependencies needed for local development.
+		unzip: {
+			'acf-pro': {
+				src: './.ci/plugins/advanced-custom-fields-pro.zip',
+				dest: './.plugins',
+			},
+		},
 		watch: {
 			php: {
 				files: ['./includes/**/*', './*.php'],
@@ -162,4 +170,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', 'Compile plugin assets', ['clean', 'replace:php', 'exec:build', 'copy', 'compile-handlebars:readme']);
 	grunt.registerTask('release', 'ZIP plugin for release', ['build', 'zip', 'compile-handlebars:manifest']);
 	grunt.registerTask('test', 'Test compiled plugin for release', ['exec:test']);
+	grunt.registerTask('install', 'Install WP plugins/dependencies for local development', ['unzip']);
 };
