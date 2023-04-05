@@ -26,9 +26,8 @@ License URI: {{license_uri}}
 == Frequently Asked Questions ==
 {{#each faqs}}
 
-= {{ q }} =
-
-{{ a }}
+= {{& q}} =
+{{& a}}
 {{/each}}
 {{/if}}
 {{#if screenshots}}
@@ -36,58 +35,13 @@ License URI: {{license_uri}}
 == Screenshots ==
 
 {{#each screenshots~}}
-	{{count @index}}. {{& caption}}
+1. [{{& url}} {{& caption}}]
 {{/each}}
 {{/if}}
 {{/with}}
-{{#with changelog}}
 
 == Changelog ==
-{{#with (lookup releases 0)}}
 
-= {{name}} ({{date}}) =
-{{#if breaking~}}
-{{#each breaking}}
-* ‼️ BREAKING: {{& this}}
-{{/each}}
-{{/if}}
-{{#if added~}}
-{{#each added}}
-* 📦 ADDED: {{& this}}
-{{/each}}
-{{/if}}
-{{#if changed~}}
-{{#each changed}}
-* 👌 CHANGED: {{& this}}
-{{/each}}
-{{/if}}
-{{#if deprecated~}}
-{{#each deprecated}}
-* ⚠️ DEPRECATED: {{& this}}
-{{/each}}
-{{/if}}
-{{#if removed~}}
-{{#each removed}}
-* 🚫 REMOVED: {{& this}}
-{{/each}}
-{{/if}}
-{{#if fixed~}}
-{{#each fixed}}
-* 🐛 FIXED: {{& this}}
-{{/each}}
-{{/if}}
-{{#if security~}}
-{{#each security}}
-* 🚨 SECURITY: {{& this}}
-{{/each}}
-{{/if}}
-{{#if notice}}
+\{{CHANGELOG}}
 
-== Upgrade Notice ==
-
-= {{title}} ({{date}}) =
-{{& notice}}
-
-{{~/if}}
-{{~/with}}
-{{~/with}}
+View the full [changelog]({{plugin.uri}}/blob/master/CHANGELOG.md).

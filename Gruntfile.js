@@ -15,13 +15,14 @@ module.exports = function(grunt) {
 		requires_php: '7.4', // Minimum PHP version (should match composer.json)
 		license: 'GPLv3 or later',
 		license_uri: 'https://www.gnu.org/licenses/gpl-3.0.txt',
-		contributors: ['screid123'], // GitHub handles
-		short_description: '<%= pkg.description %>',
-		description: '<%= pkg.description %>',
-		installation: false, // Installation instructions
-		faqs: false, // FAQs
-		screenshots: false, // Screenshots
-		banners: false, // Banner files
+		contributors: ['[screid123](https://github.com/screid123)'], // GitHub handles
+		short_description: '<%= pkg.description %>', // Short description from package.json!
+		description: false, // Long description (optional)
+		installation: false, // Installation instructions (optional)
+		faqs: false, // FAQs (optional; eg- [{ q: 'Why did the chicken cross the road?', a: 'To get to the other side.' }])
+		screenshots: false, // Screenshots (optional; eg- [{ url: 'https://cdn.ccstatic.com/wordpress-plugins/<%= pkg.name %>/assets/screenshot-1.png', caption: 'The screenshot description corresponds to ./assets/screenshot-1.png.'}, {url: 'https://cdn.ccstatic.com/wordpress-plugins/<%= pkg.name %>/assets/screenshot-2.png', caption: 'The screenshot description corresponds to ./assets/screenshot-2.png.'}])
+		banners: false, // Banner files (optional; eg- { low: './assets/banner-low.png', high: './assets/banner-high.png' })
+		last_updated: new Date().toISOString(), // Build timestamp
 	};
 
 	// Project configuration.
@@ -55,24 +56,14 @@ module.exports = function(grunt) {
 					src: './.ci/templates/manifest.hbs',
 					dest: './dist/manifest.json',
 				}],
-				helpers: './.ci/templates/helpers/*.js',
-				templateData: {
-					changelog: false,
-					plugin: meta,
-					releases: false,
-					version: pkg.version,
-				},
+				templateData: { plugin: meta },
 			},
 			readme: {
 				files: [{
 					src: './.ci/templates/readme.hbs',
 					dest: './build/readme.txt',
 				}],
-				helpers: './.ci/templates/helpers/*.js',
-				templateData: {
-					changelog: false,
-					plugin: meta,
-				},
+				templateData: { plugin: meta },
 			},
 		},
 		replace: {
