@@ -21,7 +21,7 @@ if ( ! class_exists( 'RV_Updater' ) ) :
 	final class RV_Updater {
 
 		/** @var string The current version of the updater */
-		private static $version = '1.0.2';
+		private static $version = '1.1.0';
 
 		/** @var self The singleton instance of the updater */
 		private static $instance;
@@ -39,24 +39,26 @@ if ( ! class_exists( 'RV_Updater' ) ) :
 		 * @uses RV_Updater::modify_update_plugins_transient() in the "pre_set_site_transient_update_plugins" filter.
 		 */
 		private function __construct() {
-			// Modify plugin data visible in the 'View details' popup.
-			add_filter( 'plugins_api', array( $this, 'modify_plugin_details' ), 10, 3 );
+			if ( function_exists( 'add_filter' ) ) {
+				// Modify plugin data visible in the 'View details' popup.
+				add_filter( 'plugins_api', array( $this, 'modify_plugin_details' ), 10, 3 );
 
-			// Append update information to transients.
-			add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'modify_update_plugins_transient' ), 10, 2 );
+				// Append update information to transients.
+				add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'modify_update_plugins_transient' ), 10, 2 );
+			}
 		}
 
 		/**
 		 * Cloning is not permitted.
 		 */
-		protected function __clone() {
+		public function __clone() {
 			throw new \Exception( "Cannot clone a singleton." );
 		}
 
 		/**
 		 * Unserialization is not permitted.
 		 */
-		private function __wakeup() {
+		public function __wakeup() {
 			throw new \Exception( "Cannot unserialize a singleton." );
 		}
 
