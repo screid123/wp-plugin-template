@@ -1,8 +1,8 @@
-name: Release
-run-name: Release ${{ github.event.release.tag_name }}
+name: Publish
+run-name: Publish ${{ github.event.release.tag_name }}
 on:
   release:
-    types: [released]
+    types: [published]
 jobs:
   release:
     name: 'Publish Release assets'
@@ -14,37 +14,35 @@ jobs:
     steps:
       - name: 'Checkout repo'
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.release.tag_name }}
       - name: 'Set up Node'
         uses: actions/setup-node@v3
         with:
           node-version-file: 'package.json' # Uses `engines.node` value!
           cache: 'npm'
-      - name: 'Install Composer dependencies'
-        uses: php-actions/composer@v6
-        with:
-          dev: no
-          args: --optimize-autoloader --classmap-authoritative
-          version: "2.x"
-          php_version: "7.4" # This should match your "requires_php" value from the Gruntfile.js
       - name: 'Install NPM dependencies'
         run: npm ci --ignore-scripts --no-optional
-      - name: 'Build the plugin'
-        run: npm run release
-      - name: 'Run tests'
-        run: npm test
-      - name: 'Upload the plugin as a Release Asset'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GHA_RELEASE_TOKEN }}
+      - name: 'Download the release plugin ZIP'
+        uses: i3h/download-release-asset@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: dist/${{ env.PLUGIN_SLUG }}-${{ github.event.release.tag_name }}.zip
-          asset_name: ${{ env.PLUGIN_SLUG }}-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
-      - name: 'Remove “manifest.json” for pre-releases before uploading to S3'
-        if: contains(github.event.release.tag_name, '-rc.')
-        working-directory: dist
-        run: rm -f manifest.json
+          owner: ${{ env.GITHUB_REPOSITORY_OWNER }}
+          repo: ${{ env.GITHUB_REPOSITORY#*/ }}
+          tag: ${{ github.event.release.tag_name }}
+          file: wp-plugin-template-${{ github.event.release.tag_name }}.zip
+          path: dist
+          token: ${{ secrets.GHA_RELEASE_TOKEN }}
+      - name: 'Download the release manifest'
+        if: !contains(github.event.release.tag_name, '-rc.')
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: ${{ env.GITHUB_REPOSITORY_OWNER }}
+          repo: ${{ env.GITHUB_REPOSITORY#*/ }}
+          tag: ${{ github.event.release.tag_name }}
+          file: manifest.json
+          path: dist
+          token: ${{ secrets.GHA_RELEASE_TOKEN }}
       - name: 'Deploy artifacts to S3'
         uses: jakejarvis/s3-sync-action@master
         with:

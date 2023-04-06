@@ -159,7 +159,7 @@ module.exports = function(grunt) {
 
 	// Create tasks.
 	grunt.registerTask('build', 'Compile plugin assets', ['clean', 'replace:php', 'exec:build', 'copy', 'compile-handlebars:readme']);
-	grunt.registerTask('release', 'ZIP plugin for release', ['build', 'zip', 'compile-handlebars:manifest']);
+	grunt.registerTask('release', 'Prepare plugin for release', ['build', 'compile-handlebars:manifest']);
 	grunt.registerTask('test', 'Test compiled plugin for release', ['exec:test']);
 	grunt.registerTask('install', 'Install WP plugins/dependencies for local development', ['unzip']);
 };

@@ -14,6 +14,13 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: 'Install Composer dependencies'
+        uses: php-actions/composer@v6
+        with:
+          dev: no
+          args: --optimize-autoloader --classmap-authoritative
+          version: "2.x"
+          php_version: "7.4" # This should match your "requires_php" value from the Gruntfile.js
       - name: 'Set up Node'
         uses: actions/setup-node@v3
         with:
@@ -21,6 +28,10 @@ jobs:
           cache: 'npm'
       - name: 'Install NPM dependencies'
         run: npm ci --ignore-scripts
+      - name: 'Build plugin for release'
+        run: npm run release
+      - name: 'Run tests'
+        run: npm run test
       - name: 'Run semantic-release'
         run: npx semantic-release
         env:
