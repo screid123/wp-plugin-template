@@ -35,24 +35,22 @@ jobs:
       - name: 'Install NPM dependencies'
         run: npm ci --ignore-scripts --no-optional
       - name: 'Download the release plugin ZIP'
-        uses: i3h/download-release-asset@v1
+        uses: dsaltares/fetch-gh-release-asset@master
         with:
-          owner: ${{ env.GITHUB_REPOSITORY_OWNER }}
-          repo: ${{ github.event.repository.name }}
-          tag: ${{ github.event.release.tag_name }}
-          file: ${{ format('wp-plugin-template-{0}.zip', github.event.release.tag_name }}
-          path: dist
+          file: ${{ format('wp-plugin-template-{0}.zip', github.event.release.tag_name) }}
+          repo: ${{ env.GITHUB_REPOSITORY }}
           token: ${{ secrets.GHA_RELEASE_TOKEN }}
+          version: ${{ format('tag/{0}', github.event.release.tag_name) }}
+          target: dist
       - name: 'Download the release manifest'
         if: !contains(github.event.release.tag_name, '-rc.')
-        uses: i3h/download-release-asset@v1
+        uses: dsaltares/fetch-gh-release-asset@master
         with:
-          owner: ${{ env.GITHUB_REPOSITORY_OWNER }}
-          repo: ${{ github.event.repository.name }}
-          tag: ${{ github.event.release.tag_name }}
           file: manifest.json
-          path: dist
+          repo: ${{ env.GITHUB_REPOSITORY }}
           token: ${{ secrets.GHA_RELEASE_TOKEN }}
+          version: ${{ format('tag/{0}', github.event.release.tag_name) }}
+          target: dist
       - name: 'Deploy artifacts to S3'
         uses: jakejarvis/s3-sync-action@master
         with:
