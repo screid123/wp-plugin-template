@@ -39,20 +39,20 @@ jobs:
       - name: 'Download the release plugin ZIP'
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          file: ${{ format('wp-plugin-template-{0}.zip', env.TAG_NAME) }}
           repo: ${{ env.GITHUB_REPOSITORY }}
-          token: ${{ secrets.GHA_RELEASE_TOKEN }}
           version: ${{ format('tag/{0}', env.TAG_NAME) }}
+          file: ${{ format('{0}-{1}.zip', env.PLUGIN_SLUG, env.TAG_NAME) }}
           target: 'dist/'
+          token: ${{ secrets.GHA_RELEASE_TOKEN }}
       - name: 'Download the release ”manifest.json”'
         if: !contains(env.TAG_NAME, '-rc.')
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          file: manifest.json
           repo: ${{ env.GITHUB_REPOSITORY }}
-          token: ${{ secrets.GHA_RELEASE_TOKEN }}
           version: ${{ format('tag/{0}', env.TAG_NAME) }}
+          file: 'manifest.json'
           target: 'dist/'
+          token: ${{ secrets.GHA_RELEASE_TOKEN }}
       - name: 'Deploy artifacts to S3'
         uses: jakejarvis/s3-sync-action@master
         with:
