@@ -17,7 +17,7 @@
 			{
 				"replacements": [
 					{
-						"files": ["build/readme.txt", "dist/manifest.txt"],
+						"files": ["build/readme.txt", "dist/manifest.json"],
 						"from": "{{CHANGELOG}}",
 						"to": "${nextRelease.notes}"
 					}
