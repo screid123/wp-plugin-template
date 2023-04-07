@@ -1,5 +1,12 @@
 # Changelog
 
+# [2.0.0-v2.2](https://github.com/screid123/wp-plugin-template/compare/v2.0.0-v2.1...v2.0.0-v2.2) (2023-04-07)
+
+
+### Bug Fixes
+
+* add debug output to semantic-release workflow ([40691fe](https://github.com/screid123/wp-plugin-template/commit/40691fe0bf0a6142773d06e2e7e9dbc760470d50))
+
 # [2.0.0-v2.1](https://github.com/screid123/wp-plugin-template/compare/v1.0.2...v2.0.0-v2.1) (2023-04-07)
 
 
