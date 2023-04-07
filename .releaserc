@@ -1,7 +1,7 @@
 {
 	"tagFormat": "v${version}",
 	"repositoryUrl": "git@github.com:screid123/wp-plugin-template.git",
-	"branches": ["main"],
+	"branches": ["main", {name: "v2", prerelease: true}],
 	"plugins": [
 		"@semantic-release/commit-analyzer",
 	  	"@semantic-release/release-notes-generator",
