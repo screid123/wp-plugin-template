@@ -19,7 +19,6 @@ jobs:
       DEST_DIR: "wordpress-plugins/wp-plugin-template" # Relative path inside S3 bucket; no leading or trailing slash!
     steps:
       - name: 'Determine tag name'
-        id: tag_name
         run: echo "TAG_NAME=${{ github.event.inputs.tag_name || github.event.release.tag_name }}" >> "$GITHUB_ENV"
       - name: 'Dump ”github” context'
         run: echo "$GITHUB_CONTEXT"
@@ -45,7 +44,7 @@ jobs:
           target: 'dist/'
           token: ${{ secrets.GHA_RELEASE_TOKEN }}
       - name: 'Download the release ”manifest.json”'
-        if: !contains(env.TAG_NAME, '-rc.')
+        if: false == contains(env.TAG_NAME, '-rc.')
         uses: dsaltares/fetch-gh-release-asset@master
         with:
           repo: ${{ env.GITHUB_REPOSITORY }}
@@ -53,7 +52,7 @@ jobs:
           file: 'manifest.json'
           target: 'dist/'
           token: ${{ secrets.GHA_RELEASE_TOKEN }}
-      - name: 'Deploy artifacts to S3'
+      - name: 'Deploy release to S3'
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl private
