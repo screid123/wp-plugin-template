@@ -1,0 +1,50 @@
+{
+	"tagFormat": "v${version}",
+	"repositoryUrl": "git@github.com:screid123/wp-plugin-template.git",
+	"branches": ["main", {name: "v2", prerelease: true}],
+	"plugins": [
+		"@semantic-release/commit-analyzer",
+	  	"@semantic-release/release-notes-generator",
+	  	"@semantic-release/npm",
+	  	[
+	  		"@semantic-release/changelog",
+	  		{
+	  			"changelogTitle": "# Changelog"
+	  		}
+	  	],
+	  	[
+	  		"@google/semantic-release-replace-plugin",
+			{
+				"replacements": [
+					{
+						"files": ["build/readme.txt", "dist/manifest.json"],
+						"from": "{{CHANGELOG}}",
+						"to": "${nextRelease.notes}"
+					}
+				]
+			}
+        ],
+        [
+			"@semantic-release/exec",
+			{
+				"publishCmd": "npm run grunt zip"
+			}
+		],
+		[
+			"@semantic-release/github",
+			{
+				"assets": [
+					{
+						"path": "dist/wp-plugin-template-${nextRelease.gitTag}.zip",
+						"label": "Plugin ZIP"
+					},
+					{
+						"path": "dist/manifest.json",
+						"label": "Manifest"
+					}
+			  	]
+			}
+		],
+		"@semantic-release/git"
+	]
+}

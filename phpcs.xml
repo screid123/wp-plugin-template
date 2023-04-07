@@ -36,7 +36,7 @@
     <config name="minimum_supported_wp_version" value="5.5.1" />
 
     <!-- @see https://github.com/PHPCompatibility/PHPCompatibility#using-a-custom-ruleset -->
-    <config name="testVersion" value="7.3-" />
+    <config name="testVersion" value="7.4-" />
     <!-- @see https://github.com/PHPCompatibility/PHPCompatibilityWP#how-to-use -->
     <rule ref="PHPCompatibilityWP" />
 
