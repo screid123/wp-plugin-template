@@ -7,6 +7,7 @@ on:
     inputs:
       tag_name:
         required: true
+        description: 'The tag name to publish'
         type: string
 jobs:
   release:
@@ -17,15 +18,15 @@ jobs:
       DOWNLOAD_URI: "https://cdn.ccstatic.com/wordpress-plugins/wp-plugin-template/" # This should match the "download_uri" value in Gruntfile.js; trailing slash!
       DEST_DIR: "wordpress-plugins/wp-plugin-template" # Relative path inside S3 bucket; no leading or trailing slash!
     steps:
-      - name: 'Determine tag'
+      - name: 'Determine tag name'
         id: tag_name
         run: echo "TAG_NAME=${{ github.event.inputs.tag_name || github.event.release.tag_name }}" >> "$GITHUB_ENV"
-      - name: 'Dump "github" context'
+      - name: 'Dump ”github” context'
         run: echo "$GITHUB_CONTEXT"
         shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-      - name: 'Dump "env" context'
+      - name: 'Dump ”env” context'
         run: echo "$ENV_CONTEXT"
         shell: bash
         env:
@@ -35,13 +36,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ env.TAG_NAME }}
-      - name: 'Set up Node'
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: 'package.json' # Uses `engines.node` value!
-          cache: 'npm'
-      - name: 'Install NPM dependencies'
-        run: npm ci --ignore-scripts --no-optional
       - name: 'Download the release plugin ZIP'
         uses: dsaltares/fetch-gh-release-asset@master
         with:
@@ -50,7 +44,7 @@ jobs:
           token: ${{ secrets.GHA_RELEASE_TOKEN }}
           version: ${{ format('tag/{0}', env.TAG_NAME) }}
           target: 'dist/'
-      - name: 'Download the release manifest JSON'
+      - name: 'Download the release ”manifest.json”'
         if: !contains(env.TAG_NAME, '-rc.')
         uses: dsaltares/fetch-gh-release-asset@master
         with:
