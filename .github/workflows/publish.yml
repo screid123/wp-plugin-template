@@ -44,7 +44,7 @@ jobs:
           target: 'dist/'
           token: ${{ secrets.GHA_RELEASE_TOKEN }}
       - name: 'Download the release ”manifest.json”'
-        if: false == contains(env.TAG_NAME, '-rc.')
+        if: false == contains(env.TAG_NAME, '-v2.')
         uses: dsaltares/fetch-gh-release-asset@master
         with:
           repo: ${{ env.GITHUB_REPOSITORY }}
