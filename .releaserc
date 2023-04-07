@@ -27,7 +27,7 @@
         [
 			"@semantic-release/exec",
 			{
-				"publishCmd": "npm run gulp zip"
+				"publishCmd": "npm run grunt zip"
 			}
 		],
 		[
